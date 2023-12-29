@@ -1,8 +1,16 @@
-import React from "react";
-import { calculateWinner } from "../utils.ts";
-import Square from "./Square.tsx";
+"use client";
 
-export default function Board({ xIsNext, squares, onPlay }) {
+import React from "react";
+import { calculateWinner } from "@/utils/utils";
+import Square from "./Square";
+
+export type BoardType = {
+  xIsNext: boolean,
+  squares: string[],
+  onPlay: (nextSquares: string[]) => void,
+}
+
+export default function Board({ xIsNext, squares, onPlay } : BoardType) {
     const winner = calculateWinner(squares);
     let status;
     if (winner) {
@@ -10,7 +18,7 @@ export default function Board({ xIsNext, squares, onPlay }) {
     } else {
         status = 'Next player: ' + (xIsNext ? 'X' : 'O');
     }
-    function handleSquareClick(i) {
+    function handleSquareClick(i: number) {
         if (calculateWinner(squares) || squares[i]) {
           return;
         }
